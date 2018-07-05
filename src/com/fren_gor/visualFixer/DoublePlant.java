@@ -14,7 +14,7 @@ public class DoublePlant implements Listener {
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onDoublePlant(PlayerInteractEvent e) {
 
-		if (!e.isCancelled() || e.getAction() != Action.LEFT_CLICK_BLOCK || e.getClickedBlock().getType() != Material.DOUBLE_PLANT)
+		if (e.getAction() != Action.LEFT_CLICK_BLOCK || e.getClickedBlock().getType() != Material.DOUBLE_PLANT)
 			return;
 
 		Chunk c = e.getClickedBlock().getChunk();
