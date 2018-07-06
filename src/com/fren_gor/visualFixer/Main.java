@@ -8,6 +8,8 @@ import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.fren_gor.visualFixer.libraries.Metrics;
+
 public class Main extends JavaPlugin implements Listener {
 
 	public static int version;
@@ -35,6 +37,8 @@ public class Main extends JavaPlugin implements Listener {
 		if (getConfig().getBoolean("fix-double-plants")) {
 			Bukkit.getPluginManager().registerEvents(new DoublePlant(), this);
 		}
+		
+		new Metrics(this);
 
 	}
 
