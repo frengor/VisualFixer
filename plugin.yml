@@ -11,9 +11,15 @@ commands:
     description: Fix the blocks around the player
 
 permissions:
+  visualfix.*:
+    description: All the permissions
+    default: op
+    children:
+      visualfix.fixvisual: true
+      visualfix.visualfixer: true
   visualfix.fixvisual:
     description: Use the command /fixvisual of the plugin VisualFixer
     default: true
   visualfix.visualfixer:
     description: Use the command /visualfixer of the plugin VisualFixer
-    default: true
+    default: op
