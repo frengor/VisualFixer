@@ -35,6 +35,8 @@ import com.fren_gor.visualFixer.ReflectionUtil;
  */
 @SuppressWarnings("unchecked")
 public class Metrics {
+	
+	static Timer timer = null;
 
 	static {
 		// You can use the property to disable the check in your test
@@ -155,7 +157,10 @@ public class Metrics {
 	 * Starts the Scheduler which submits our data every 30 minutes.
 	 */
 	private void startSubmitting() {
-		final Timer timer = new Timer(true); // We use a timer cause the Bukkit
+		if(timer != null){
+			timer.cancel();
+		}
+		timer = new Timer(true); // We use a timer cause the Bukkit
 												// scheduler is affected by
 												// server lags
 		timer.scheduleAtFixedRate(new TimerTask() {

@@ -6,6 +6,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 public class DoublePlant implements Listener {
@@ -14,11 +15,24 @@ public class DoublePlant implements Listener {
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onDoublePlant(PlayerInteractEvent e) {
 
-		if (e.getAction() != Action.LEFT_CLICK_BLOCK || e.getClickedBlock().getType() != Material.DOUBLE_PLANT)
+		if (!e.isCancelled() || e.getAction() != Action.LEFT_CLICK_BLOCK
+				|| e.getClickedBlock().getType() != Material.DOUBLE_PLANT)
 			return;
 
 		Chunk c = e.getClickedBlock().getChunk();
 		e.getClickedBlock().getWorld().refreshChunk(c.getX(), c.getZ());
+
+	}
+
+	@SuppressWarnings("deprecation")
+	@EventHandler(priority = EventPriority.MONITOR)
+	public void onDoublePlant(BlockBreakEvent e) {
+
+		if (!e.isCancelled() || e.getBlock().getType() != Material.DOUBLE_PLANT)
+			return;
+
+		Chunk c = e.getBlock().getChunk();
+		e.getBlock().getWorld().refreshChunk(c.getX(), c.getZ());
 
 	}
 

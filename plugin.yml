@@ -7,9 +7,13 @@ commands:
   fixvisual:
     description: Fix the blocks around the player
     permission: visualfix.command
+  visualfixer:
+    description: Fix the blocks around the player
 
 permissions:
-  visualfix.command:
-    description: Use the commands of the plugin VisualFixer
+  visualfix.fixvisual:
+    description: Use the command /fixvisual of the plugin VisualFixer
     default: true
-    
+  visualfix.visualfixer:
+    description: Use the command /visualfixer of the plugin VisualFixer
+    default: true
