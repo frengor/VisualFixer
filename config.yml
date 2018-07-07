@@ -13,3 +13,9 @@ fix-pots: true
 
 # Will be double plant fixed?
 fix-double-plants: true
+
+# Will be fast breaking blocks fixed?
+fix-fast-break: true
+
+# Do not touch this number!
+config-version: 1

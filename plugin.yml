@@ -1,3 +1,15 @@
 main: com.fren_gor.visualFixer.Main
-version: 1.0
+version: 1.1
 name: VisualFixer
+author: fren_gor
+
+commands:
+  fixvisual:
+    description: Fix the blocks around the player
+    permission: visualfix.command
+
+permissions:
+  visualfix.command:
+    description: Use the commands of the plugin VisualFixer
+    default: true
+    

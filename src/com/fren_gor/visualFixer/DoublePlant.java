@@ -21,5 +21,5 @@ public class DoublePlant implements Listener {
 		e.getClickedBlock().getWorld().refreshChunk(c.getX(), c.getZ());
 
 	}
-	
+
 }
