@@ -257,7 +257,7 @@ public class Metrics {
 	/**
 	 * Collects the data and sends it afterwards.
 	 */
-	private void submitData() {
+	public void submitData() {
 		final JSONObject data = getServerData();
 
 		JSONArray pluginData = new JSONArray();

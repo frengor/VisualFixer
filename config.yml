@@ -17,5 +17,8 @@ fix-double-plants: true
 # Will be fast breaking blocks fixed?
 fix-fast-break: true
 
+# Will be place flowers inside pot fixed?
+fix-pot-place: true
+
 # Do not touch this number!
-config-version: 1
+config-version: 2

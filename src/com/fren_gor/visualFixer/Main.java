@@ -2,6 +2,7 @@ package com.fren_gor.visualFixer;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.Callable;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
@@ -14,6 +15,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.fren_gor.visualFixer.libraries.Metrics;
+import com.fren_gor.visualFixer.libraries.org.inventivetalent.update.spiget.SpigetUpdate;
+import com.fren_gor.visualFixer.libraries.org.inventivetalent.update.spiget.UpdateCallback;
+import com.fren_gor.visualFixer.libraries.org.inventivetalent.update.spiget.comparator.VersionComparator;
 
 public class Main extends JavaPlugin implements Listener {
 
@@ -38,17 +42,99 @@ public class Main extends JavaPlugin implements Listener {
 			e.printStackTrace();
 		}
 
+		Metrics m = new Metrics(this);
+
 		if (getConfig().getBoolean("fix-pots")) {
+
 			Bukkit.getPluginManager().registerEvents(new FlowerPot(), this);
+
 		}
 		if (getConfig().getBoolean("fix-double-plants")) {
+
 			Bukkit.getPluginManager().registerEvents(new DoublePlant(), this);
+
 		}
 		if (getConfig().getBoolean("fix-fast-break")) {
+
 			Bukkit.getPluginManager().registerEvents(new FastBreak(), this);
+
+		}
+		if (getConfig().getBoolean("fix-pot-place")) {
+
+			Bukkit.getPluginManager().registerEvents(new PlacePot(), this);
+
 		}
 
-		new Metrics(this);
+		m.addCustomChart(new Metrics.SimplePie("fix_pots_take", new Callable<String>() {
+			@Override
+			public String call() throws Exception {
+
+				return getConfig().getBoolean("fix-fast-break") ? "Enabled" : "Disabled";
+
+			}
+		}));
+
+		m.addCustomChart(new Metrics.SimplePie("fix_double_plants", new Callable<String>() {
+			@Override
+			public String call() throws Exception {
+
+				return getConfig().getBoolean("fix-fast-break") ? "Enabled" : "Disabled";
+
+			}
+		}));
+
+		m.addCustomChart(new Metrics.SimplePie("fix_fast_break", new Callable<String>() {
+			@Override
+			public String call() throws Exception {
+
+				return getConfig().getBoolean("fix-fast-break") ? "Enabled" : "Disabled";
+
+			}
+		}));
+
+		m.addCustomChart(new Metrics.SimplePie("fix_pots_place", new Callable<String>() {
+			@Override
+			public String call() throws Exception {
+
+				return getConfig().getBoolean("fix-fast-break") ? "Enabled" : "Disabled";
+
+			}
+		}));
+
+		SpigetUpdate updater = new SpigetUpdate(this, 58442);
+
+		// This converts a semantic version to an integer and checks if the
+		// updated version is greater
+		updater.setVersionComparator(VersionComparator.SEM_VER);
+
+		updater.checkForUpdate(new UpdateCallback() {
+			@Override
+			public void updateAvailable(String newVersion, String downloadUrl, boolean hasDirectDownload) {
+				//// A new version is available
+				// newVersion - the latest version
+				// downloadUrl - URL to the download
+				// hasDirectDownload - whether the update is available for a
+				//// direct download on spiget.org
+				Bukkit.getConsoleSender().sendMessage("§e" + getName() + " is updating!");
+				if (hasDirectDownload) {
+					if (updater.downloadUpdate()) {
+						// Update downloaded, will be loaded when the server
+						// restarts
+						Bukkit.getConsoleSender()
+								.sendMessage("§bUpdate downloaded, will be loaded when the server restarts");
+					} else {
+						// Update failed
+						getLogger().warning("Update download failed, reason is " + updater.getFailReason());
+					}
+				}
+			}
+
+			@Override
+			public void upToDate() {
+				//// Plugin is up-to-date
+				Bukkit.getConsoleSender().sendMessage("§b" + getName() + " is up to date!");
+			}
+		});
 
 	}
 
@@ -67,6 +153,16 @@ public class Main extends JavaPlugin implements Listener {
 
 			Chunk c = b.getChunk();
 			b.getWorld().refreshChunk(c.getX(), c.getZ());
+
+			b.getWorld().refreshChunk(c.getX() - 1, c.getZ() + 1);
+			b.getWorld().refreshChunk(c.getX() - 1, c.getZ() - 1);
+			b.getWorld().refreshChunk(c.getX() + 1, c.getZ() + 1);
+			b.getWorld().refreshChunk(c.getX() + 1, c.getZ() - 1);
+
+			b.getWorld().refreshChunk(c.getX(), c.getZ() + 1);
+			b.getWorld().refreshChunk(c.getX() - 1, c.getZ());
+			b.getWorld().refreshChunk(c.getX() + 1, c.getZ());
+			b.getWorld().refreshChunk(c.getX(), c.getZ() - 1);
 
 			return true;
 

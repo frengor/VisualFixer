@@ -20,36 +20,32 @@ public class FlowerPot implements Listener {
 		if (e.getAction() != Action.RIGHT_CLICK_BLOCK)
 			return;
 
-		Object te = getTitleEntity(e.getClickedBlock());
+		if (e.getClickedBlock().getType() == Material.FLOWER_POT && getFlowerPotContenent(e.getClickedBlock()) != 0) {
 
-		try {
-			if (e.getClickedBlock().getType() == Material.FLOWER_POT
-					&& getFlowerPotContenent(e.getClickedBlock()) != 0) {
+			if (Main.version > 10) {
 
-				if (Main.version > 10) {
-					
-					e.setCancelled(true);
-
-				}
-
-				e.getPlayer().sendBlockChange(e.getClickedBlock().getLocation(), Material.AIR, (byte) 0);
-
-				e.getPlayer().sendBlockChange(e.getClickedBlock().getLocation(), Material.FLOWER_POT, (byte) 0);
-
-				if (te == null || ReflectionUtil.invoke(te, "getUpdatePacket") == null) {
-
-					return;
-
-				}
-
-				sendPacket(e.getPlayer(), ReflectionUtil.invoke(te, "getUpdatePacket"));
-
-				e.getPlayer().updateInventory();
+				e.setCancelled(true);
 
 			}
-		} catch (Exception e1) {
-			e1.printStackTrace();
+			
+			Object te = getTitleEntity(e.getClickedBlock());
+
+			e.getPlayer().sendBlockChange(e.getClickedBlock().getLocation(), Material.AIR, (byte) 0);
+
+			e.getPlayer().sendBlockChange(e.getClickedBlock().getLocation(), Material.FLOWER_POT, (byte) 0);
+
+			if (te == null || ReflectionUtil.invoke(te, "getUpdatePacket") == null) {
+
+				return;
+
+			}
+
+			sendPacket(e.getPlayer(), ReflectionUtil.invoke(te, "getUpdatePacket"));
+
+			e.getPlayer().updateInventory();
+
 		}
+
 	}
 
 	public static void sendPacket(Player player, Object packet) {

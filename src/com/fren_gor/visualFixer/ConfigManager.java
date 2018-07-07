@@ -16,7 +16,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 public class ConfigManager {
 
-	private final static int version = 1;
+	private final static int version = 2;
 
 	public static void load(Main m) throws IOException {
 
@@ -51,6 +51,8 @@ public class ConfigManager {
 		}
 
 		m.saveResource("config.yml", true);
+		
+		y.set("config-version", version);
 
 		List<String> lnew = new ArrayList<>();
 
