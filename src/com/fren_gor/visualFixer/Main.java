@@ -66,6 +66,11 @@ public class Main extends JavaPlugin {
 			Bukkit.getPluginManager().registerEvents(new PlacePot(), this);
 
 		}
+		if (getConfig().getBoolean("fix-pistons")) {
+
+			Bukkit.getPluginManager().registerEvents(new PistonExtension(), this);
+
+		}
 
 		m.addCustomChart(new Metrics.SimplePie("fix_pots_take", new Callable<String>() {
 			@Override
@@ -99,6 +104,15 @@ public class Main extends JavaPlugin {
 			public String call() throws Exception {
 
 				return getConfig().getBoolean("fix-fast-break") ? "Enabled" : "Disabled";
+
+			}
+		}));
+		
+		m.addCustomChart(new Metrics.SimplePie("fix_piston_break", new Callable<String>() {
+			@Override
+			public String call() throws Exception {
+
+				return getConfig().getBoolean("fix-pistons") ? "Enabled" : "Disabled";
 
 			}
 		}));
@@ -187,9 +201,9 @@ public class Main extends JavaPlugin {
 				return true;
 
 			}
-			
-			if(args[0].equalsIgnoreCase("reload")){
-				
+
+			if (args[0].equalsIgnoreCase("reload")) {
+
 				BlockBreakEvent.getHandlerList().unregister(this);
 				PlayerInteractEvent.getHandlerList().unregister(this);
 
@@ -225,6 +239,11 @@ public class Main extends JavaPlugin {
 				if (getConfig().getBoolean("fix-pot-place")) {
 
 					Bukkit.getPluginManager().registerEvents(new PlacePot(), this);
+
+				}
+				if (getConfig().getBoolean("fix-pistons")) {
+
+					Bukkit.getPluginManager().registerEvents(new PistonExtension(), this);
 
 				}
 
@@ -263,10 +282,20 @@ public class Main extends JavaPlugin {
 
 					}
 				}));
+				
+				m.addCustomChart(new Metrics.SimplePie("fix_piston_break", new Callable<String>() {
+					@Override
+					public String call() throws Exception {
+
+						return getConfig().getBoolean("fix-pistons") ? "Enabled" : "Disabled";
+
+					}
+				}));
 
 				SpigetUpdate updater = new SpigetUpdate(this, 58442);
 
-				// This converts a semantic version to an integer and checks if the
+				// This converts a semantic version to an integer and checks if
+				// the
 				// updated version is greater
 				updater.setVersionComparator(VersionComparator.SEM_VER);
 
@@ -276,12 +305,14 @@ public class Main extends JavaPlugin {
 						//// A new version is available
 						// newVersion - the latest version
 						// downloadUrl - URL to the download
-						// hasDirectDownload - whether the update is available for a
+						// hasDirectDownload - whether the update is available
+						//// for a
 						//// direct download on spiget.org
 						Bukkit.getConsoleSender().sendMessage("§e" + getName() + " is updating!");
 						if (hasDirectDownload) {
 							if (updater.downloadUpdate()) {
-								// Update downloaded, will be loaded when the server
+								// Update downloaded, will be loaded when the
+								// server
 								// restarts
 								Bukkit.getConsoleSender()
 										.sendMessage("§bUpdate downloaded, will be loaded when the server restarts");
@@ -298,9 +329,9 @@ public class Main extends JavaPlugin {
 						Bukkit.getConsoleSender().sendMessage("§b" + getName() + " is up to date!");
 					}
 				});
-				
+
 				sender.sendMessage("§aReload complete.");
-				
+
 				return true;
 			}
 

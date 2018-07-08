@@ -20,5 +20,12 @@ fix-fast-break: true
 # Will be place flowers inside pot fixed?
 fix-pot-place: true
 
+# Will be break pistons extension fixed?
+fix-pistons: true
+
+# Will be advanced checks used?
+# (Use them only in case of strange bugs)
+advanced-check: false
+
 # Do not touch this number!
-config-version: 2
+config-version: 3
