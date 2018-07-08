@@ -116,6 +116,15 @@ public class Main extends JavaPlugin {
 
 			}
 		}));
+		
+		m.addCustomChart(new Metrics.SimplePie("advanced_checks", new Callable<String>() {
+			@Override
+			public String call() throws Exception {
+
+				return getConfig().getBoolean("advanced-check") ? "Enabled" : "Disabled";
+
+			}
+		}));
 
 		SpigetUpdate updater = new SpigetUpdate(this, 58442);
 
@@ -288,6 +297,15 @@ public class Main extends JavaPlugin {
 					public String call() throws Exception {
 
 						return getConfig().getBoolean("fix-pistons") ? "Enabled" : "Disabled";
+
+					}
+				}));
+				
+				m.addCustomChart(new Metrics.SimplePie("advanced_checks", new Callable<String>() {
+					@Override
+					public String call() throws Exception {
+
+						return getConfig().getBoolean("advanced-check") ? "Enabled" : "Disabled";
 
 					}
 				}));
