@@ -23,9 +23,27 @@ fix-pot-place: true
 # Will be break pistons extension fixed?
 fix-pistons: true
 
+# Will be chorus fixed?
+# 1.9+ feature
+fix-chorus: true
+
+#########################
+#                       #
+#     1.13 Features     #
+#                       #
+#########################
+
+# Will be kelps fixed?
+fix-kelps: true
+
+# Will be tall seagrass fixed?
+fix-tall-seagrass: true
+
+#########################
+
 # Will be advanced checks used?
 # (Use them only in case of strange bugs)
 advanced-check: false
 
 # Do not touch this number!
-config-version: 3
+config-version: 5

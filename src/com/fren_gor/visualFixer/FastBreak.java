@@ -1,7 +1,9 @@
 package com.fren_gor.visualFixer;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -16,7 +18,7 @@ public class FastBreak implements Listener {
 
 	public FastBreak() {
 
-		if (Main.instance.getConfig().getBoolean("advanced-checks")) {
+		if (Main.instance.getConfig().getBoolean("advanced-check")) {
 
 			Bukkit.getPluginManager().registerEvents(new Advanced(), Main.instance);
 
@@ -36,7 +38,26 @@ public class FastBreak implements Listener {
 		if (e.getPlayer().getItemInHand().getItemMeta().hasEnchant(Enchantment.DIG_SPEED)
 				|| e.getPlayer().hasPotionEffect(PotionEffectType.FAST_DIGGING)) {
 
-			e.getPlayer().sendBlockChange(e.getBlock().getLocation(), Material.AIR, (byte) 0);
+			Location l = e.getBlock().getLocation().clone().add(-1, -1, -1);
+			
+			for (int x = 0; x < 3; x++) {
+				for (int y = 0; y < 3; y++) {
+					for (int z = 0; z < 3; z++) {
+						
+						if(x==1&&y==1&&z==1){
+							
+							e.getPlayer().sendBlockChange(e.getBlock().getLocation(), Material.AIR, (byte) 0);
+							
+							continue;
+						}
+
+						Block b = e.getBlock().getWorld().getBlockAt(l.clone().add(x, y, z));
+
+						e.getPlayer().sendBlockChange(b.getLocation(), b.getBlockData());
+
+					}
+				}
+			}
 
 		}
 
@@ -45,7 +66,7 @@ public class FastBreak implements Listener {
 	private boolean isTool(Material l) {
 
 		if (l.toString().contains("SWORD") || l.toString().contains("AXE") || l.toString().contains("PICKAXE")
-				|| l.toString().contains("HOE") || l.toString().contains("SPADE")) {
+				|| l.toString().contains("HOE") || l.toString().contains("SPADE") || l.toString().contains("SHOVEL")) {
 			return true;
 		}
 		return false;

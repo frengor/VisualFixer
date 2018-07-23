@@ -2,10 +2,11 @@ package com.fren_gor.visualFixer;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.Callable;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
@@ -20,17 +21,26 @@ import com.fren_gor.visualFixer.libraries.Metrics;
 import com.fren_gor.visualFixer.libraries.org.inventivetalent.update.spiget.SpigetUpdate;
 import com.fren_gor.visualFixer.libraries.org.inventivetalent.update.spiget.UpdateCallback;
 import com.fren_gor.visualFixer.libraries.org.inventivetalent.update.spiget.comparator.VersionComparator;
+import com.fren_gor.visualFixer.v1_13.Kelp;
+import com.fren_gor.visualFixer.v1_13.TallSeagrass;
+
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.ClickEvent.Action;
+import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.TextComponent;
 
 public class Main extends JavaPlugin {
 
 	public static int version;
-	static Main instance;
+	public static Main instance;
 
 	@Override
 	public void onEnable() {
 		instance = this;
 
 		version = Integer.parseInt(ReflectionUtil.getVersion().split("_")[1]);
+
+		getCommand("visualfixer").setTabCompleter(this);
 
 		try {
 			ConfigManager.load(this);
@@ -48,12 +58,18 @@ public class Main extends JavaPlugin {
 
 		if (getConfig().getBoolean("fix-pots")) {
 
-			Bukkit.getPluginManager().registerEvents(new FlowerPot(), this);
+			if (version >= 13)
+				Bukkit.getPluginManager().registerEvents(new com.fren_gor.visualFixer.v1_13.FlowerPot(), this);
+			else
+				Bukkit.getPluginManager().registerEvents(new FlowerPot(), this);
 
 		}
 		if (getConfig().getBoolean("fix-double-plants")) {
 
-			Bukkit.getPluginManager().registerEvents(new DoublePlant(), this);
+			if (version >= 13)
+				Bukkit.getPluginManager().registerEvents(new com.fren_gor.visualFixer.v1_13.DoublePlant(), this);
+			else
+				Bukkit.getPluginManager().registerEvents(new DoublePlant(), this);
 
 		}
 		if (getConfig().getBoolean("fix-fast-break")) {
@@ -63,12 +79,43 @@ public class Main extends JavaPlugin {
 		}
 		if (getConfig().getBoolean("fix-pot-place")) {
 
-			Bukkit.getPluginManager().registerEvents(new PlacePot(), this);
+			if (version >= 13)
+				Bukkit.getPluginManager().registerEvents(new com.fren_gor.visualFixer.v1_13.PlacePot(), this);
+			else
+				Bukkit.getPluginManager().registerEvents(new PlacePot(), this);
 
 		}
 		if (getConfig().getBoolean("fix-pistons")) {
 
-			Bukkit.getPluginManager().registerEvents(new PistonExtension(), this);
+			if (version >= 13)
+				Bukkit.getPluginManager().registerEvents(new com.fren_gor.visualFixer.v1_13.PistonExtension(), this);
+			else
+				Bukkit.getPluginManager().registerEvents(new PistonExtension(), this);
+
+		}
+
+		if (version > 8 && getConfig().getBoolean("fix-chorus")) {
+
+			if (version >= 13)
+				Bukkit.getPluginManager().registerEvents(new com.fren_gor.visualFixer.v1_13.Chorus(), this);
+			else
+				Bukkit.getPluginManager().registerEvents(new Chorus(), this);
+
+		}
+
+		if (version >= 13) {
+
+			if (getConfig().getBoolean("fix-kelps")) {
+
+				Bukkit.getPluginManager().registerEvents(new Kelp(), this);
+
+			}
+
+			if (getConfig().getBoolean("fix-tall-seagrass")) {
+
+				Bukkit.getPluginManager().registerEvents(new TallSeagrass(), this);
+
+			}
 
 		}
 
@@ -107,7 +154,7 @@ public class Main extends JavaPlugin {
 
 			}
 		}));
-		
+
 		m.addCustomChart(new Metrics.SimplePie("fix_piston_break", new Callable<String>() {
 			@Override
 			public String call() throws Exception {
@@ -116,12 +163,39 @@ public class Main extends JavaPlugin {
 
 			}
 		}));
-		
+
 		m.addCustomChart(new Metrics.SimplePie("advanced_checks", new Callable<String>() {
 			@Override
 			public String call() throws Exception {
 
 				return getConfig().getBoolean("advanced-check") ? "Enabled" : "Disabled";
+
+			}
+		}));
+
+		m.addCustomChart(new Metrics.SimplePie("fix_kelp_break", new Callable<String>() {
+			@Override
+			public String call() throws Exception {
+
+				return getConfig().getBoolean("fix-kelps") ? "Enabled" : "Disabled";
+
+			}
+		}));
+
+		m.addCustomChart(new Metrics.SimplePie("fix_tall_seagrass_break", new Callable<String>() {
+			@Override
+			public String call() throws Exception {
+
+				return getConfig().getBoolean("fix-tall-seagrass") ? "Enabled" : "Disabled";
+
+			}
+		}));
+
+		m.addCustomChart(new Metrics.SimplePie("fix_chorus", new Callable<String>() {
+			@Override
+			public String call() throws Exception {
+
+				return getConfig().getBoolean("fix-chorus") ? "Enabled" : "Disabled";
 
 			}
 		}));
@@ -163,6 +237,16 @@ public class Main extends JavaPlugin {
 
 	}
 
+	@Override
+	public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+
+		if (sender instanceof Player)
+			if (!((Player) sender).hasPermission("visualfix.visualfixer"))
+				return Arrays.asList(new String[0]);
+		return Arrays.asList(new String[] { "reload" });
+
+	}
+
 	@SuppressWarnings("deprecation")
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -188,6 +272,8 @@ public class Main extends JavaPlugin {
 			b.getWorld().refreshChunk(c.getX() - 1, c.getZ());
 			b.getWorld().refreshChunk(c.getX() + 1, c.getZ());
 			b.getWorld().refreshChunk(c.getX(), c.getZ() - 1);
+			
+			sender.sendMessage("§aVisual reloaded");
 
 			return true;
 
@@ -205,8 +291,16 @@ public class Main extends JavaPlugin {
 			if (args.length == 0) {
 
 				sender.sendMessage("§bInstalled §9VisualFixer §bversion " + getDescription().getVersion());
-				sender.sendMessage("§7Use " + ChatColor.UNDERLINE + "/visualfixer reload§r §/to reload");
-
+				TextComponent t = new TextComponent(
+						new ComponentBuilder("Use ").color(net.md_5.bungee.api.ChatColor.GRAY).create());
+				TextComponent t1 = new TextComponent(new ComponentBuilder("/visualfixer reload")
+						.color(net.md_5.bungee.api.ChatColor.GRAY).underlined(true)
+						.event(new ClickEvent(Action.RUN_COMMAND, "/visualfixer reload")).create());
+				TextComponent t2 = new TextComponent(
+						new ComponentBuilder(" to reload").color(net.md_5.bungee.api.ChatColor.GRAY).create());
+				t1.addExtra(t2);
+				t.addExtra(t1);
+				sender.spigot().sendMessage(t);
 				return true;
 
 			}
@@ -232,12 +326,19 @@ public class Main extends JavaPlugin {
 
 				if (getConfig().getBoolean("fix-pots")) {
 
-					Bukkit.getPluginManager().registerEvents(new FlowerPot(), this);
+					if (version >= 13)
+						Bukkit.getPluginManager().registerEvents(new com.fren_gor.visualFixer.v1_13.FlowerPot(), this);
+					else
+						Bukkit.getPluginManager().registerEvents(new FlowerPot(), this);
 
 				}
 				if (getConfig().getBoolean("fix-double-plants")) {
 
-					Bukkit.getPluginManager().registerEvents(new DoublePlant(), this);
+					if (version >= 13)
+						Bukkit.getPluginManager().registerEvents(new com.fren_gor.visualFixer.v1_13.DoublePlant(),
+								this);
+					else
+						Bukkit.getPluginManager().registerEvents(new DoublePlant(), this);
 
 				}
 				if (getConfig().getBoolean("fix-fast-break")) {
@@ -247,12 +348,35 @@ public class Main extends JavaPlugin {
 				}
 				if (getConfig().getBoolean("fix-pot-place")) {
 
-					Bukkit.getPluginManager().registerEvents(new PlacePot(), this);
+					if (version >= 13)
+						Bukkit.getPluginManager().registerEvents(new com.fren_gor.visualFixer.v1_13.PlacePot(), this);
+					else
+						Bukkit.getPluginManager().registerEvents(new PlacePot(), this);
 
 				}
 				if (getConfig().getBoolean("fix-pistons")) {
 
-					Bukkit.getPluginManager().registerEvents(new PistonExtension(), this);
+					if (version >= 13)
+						Bukkit.getPluginManager().registerEvents(new com.fren_gor.visualFixer.v1_13.PistonExtension(),
+								this);
+					else
+						Bukkit.getPluginManager().registerEvents(new PistonExtension(), this);
+
+				}
+
+				if (version >= 13) {
+
+					if (getConfig().getBoolean("fix-kelps")) {
+
+						Bukkit.getPluginManager().registerEvents(new Kelp(), this);
+
+					}
+
+					if (getConfig().getBoolean("fix-tall-seagrass")) {
+
+						Bukkit.getPluginManager().registerEvents(new TallSeagrass(), this);
+
+					}
 
 				}
 
@@ -291,7 +415,7 @@ public class Main extends JavaPlugin {
 
 					}
 				}));
-				
+
 				m.addCustomChart(new Metrics.SimplePie("fix_piston_break", new Callable<String>() {
 					@Override
 					public String call() throws Exception {
@@ -300,12 +424,39 @@ public class Main extends JavaPlugin {
 
 					}
 				}));
-				
+
 				m.addCustomChart(new Metrics.SimplePie("advanced_checks", new Callable<String>() {
 					@Override
 					public String call() throws Exception {
 
 						return getConfig().getBoolean("advanced-check") ? "Enabled" : "Disabled";
+
+					}
+				}));
+
+				m.addCustomChart(new Metrics.SimplePie("fix_kelp_break", new Callable<String>() {
+					@Override
+					public String call() throws Exception {
+
+						return getConfig().getBoolean("fix-kelps") ? "Enabled" : "Disabled";
+
+					}
+				}));
+
+				m.addCustomChart(new Metrics.SimplePie("fix_tall_seagrass_break", new Callable<String>() {
+					@Override
+					public String call() throws Exception {
+
+						return getConfig().getBoolean("fix-tall-seagrass") ? "Enabled" : "Disabled";
+
+					}
+				}));
+
+				m.addCustomChart(new Metrics.SimplePie("fix_chorus", new Callable<String>() {
+					@Override
+					public String call() throws Exception {
+
+						return getConfig().getBoolean("fix-chorus") ? "Enabled" : "Disabled";
 
 					}
 				}));

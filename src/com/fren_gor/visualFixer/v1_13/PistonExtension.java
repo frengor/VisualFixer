@@ -1,4 +1,4 @@
-package com.fren_gor.visualFixer;
+package com.fren_gor.visualFixer.v1_13;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -9,6 +9,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+
+import com.fren_gor.visualFixer.Main;
 
 public class PistonExtension implements Listener {
 
@@ -25,7 +27,7 @@ public class PistonExtension implements Listener {
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPistonBreak(BlockBreakEvent e) {
 		
-		if (!e.isCancelled() || e.getBlock().getType() != Material.valueOf("PISTON_EXTENSION")) {
+		if (!e.isCancelled() || e.getBlock().getType() != Material.PISTON_HEAD) {
 			return;
 		}
 
@@ -71,8 +73,8 @@ public class PistonExtension implements Listener {
 			break;
 		}
 
-		e.getPlayer().sendBlockChange(e.getBlock().getRelative(b).getLocation(), e.getBlock().getRelative(b).getType(),
-				e.getBlock().getRelative(b).getData());
+		e.getPlayer().sendBlockChange(e.getBlock().getRelative(b).getLocation(), 
+				e.getBlock().getRelative(b).getBlockData());
 
 	}
 
@@ -83,7 +85,7 @@ public class PistonExtension implements Listener {
 		public void onPistonBreak(PlayerInteractEvent e) {
 
 			if (!e.isCancelled() || e.getAction() != Action.LEFT_CLICK_BLOCK
-					|| e.getClickedBlock().getType() != Material.valueOf("PISTON_EXTENSION")) {
+					|| e.getClickedBlock().getType() != Material.PISTON_HEAD) {
 				return;
 			}
 
@@ -129,8 +131,8 @@ public class PistonExtension implements Listener {
 				break;
 			}
 
-			e.getPlayer().sendBlockChange(e.getClickedBlock().getRelative(b).getLocation(),
-					e.getClickedBlock().getRelative(b).getType(), e.getClickedBlock().getRelative(b).getData());
+			e.getPlayer().sendBlockChange(e.getClickedBlock().getRelative(b).getLocation(), 
+					e.getClickedBlock().getRelative(b).getBlockData());
 
 		}
 	}
