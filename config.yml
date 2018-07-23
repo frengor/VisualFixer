@@ -46,4 +46,4 @@ fix-tall-seagrass: true
 advanced-check: false
 
 # Do not touch this number!
-config-version: 5
+config-version: 4

@@ -1,4 +1,4 @@
-package com.fren_gor.visualFixer;
+package com.fren_gor.visualFixer.v1_13;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -13,6 +13,8 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
+
+import com.fren_gor.visualFixer.Main;
 
 public class FastBreak implements Listener {
 
@@ -39,21 +41,21 @@ public class FastBreak implements Listener {
 				|| e.getPlayer().hasPotionEffect(PotionEffectType.FAST_DIGGING)) {
 
 			Location l = e.getBlock().getLocation().clone().add(-1, -1, -1);
-
+			
 			for (int x = 0; x < 3; x++) {
 				for (int y = 0; y < 3; y++) {
 					for (int z = 0; z < 3; z++) {
-
-						if (x == 1 && y == 1 && z == 1) {
-
+						
+						if(x==1&&y==1&&z==1){
+							
 							e.getPlayer().sendBlockChange(e.getBlock().getLocation(), Material.AIR, (byte) 0);
-
+							
 							continue;
 						}
 
 						Block b = e.getBlock().getWorld().getBlockAt(l.clone().add(x, y, z));
 
-						e.getPlayer().sendBlockChange(b.getLocation(), b.getType(), b.getData());
+						e.getPlayer().sendBlockChange(b.getLocation(), b.getBlockData());
 
 					}
 				}
@@ -100,29 +102,28 @@ public class FastBreak implements Listener {
 					|| e.getPlayer().hasPotionEffect(PotionEffectType.FAST_DIGGING)) {
 
 				Location l = e.getClickedBlock().getLocation().clone().add(-1, -1, -1);
-
+				
 				for (int x = 0; x < 3; x++) {
 					for (int y = 0; y < 3; y++) {
 						for (int z = 0; z < 3; z++) {
-
-							if (x == 1 && y == 1 && z == 1) {
-
-								e.getPlayer().sendBlockChange(e.getClickedBlock().getLocation(), Material.AIR,
-										(byte) 0);
-
+							
+							if(x==1&&y==1&&z==1){
+								
+								e.getPlayer().sendBlockChange(e.getClickedBlock().getLocation(), Material.AIR, (byte) 0);
+								
 								continue;
 							}
 
 							Block b = e.getClickedBlock().getWorld().getBlockAt(l.clone().add(x, y, z));
 
-							e.getPlayer().sendBlockChange(b.getLocation(), b.getType(), b.getData());
+							e.getPlayer().sendBlockChange(b.getLocation(), b.getBlockData());
 
 						}
 					}
 				}
 
 			}
-
+			
 		}
 	}
 

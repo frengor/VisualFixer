@@ -16,7 +16,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 public class ConfigManager {
 
-	private final static int version = 5;
+	private final static int version = 4;
 
 	public static void load(Main m) throws IOException {
 
