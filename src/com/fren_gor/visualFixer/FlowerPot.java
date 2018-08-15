@@ -24,10 +24,14 @@ public class FlowerPot implements Listener {
 
 			if (Main.version > 10) {
 
+				if (!Main.instance.getConfig().getBoolean("cancel-pots-take")) {
+					return;
+				}
+
 				e.setCancelled(true);
 
 			}
-			
+
 			Object te = getTitleEntity(e.getClickedBlock());
 
 			e.getPlayer().sendBlockChange(e.getClickedBlock().getLocation(), Material.AIR, (byte) 0);

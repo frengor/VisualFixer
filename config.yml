@@ -10,6 +10,8 @@
 
 # Will be flower pots fixed?
 fix-pots: true
+# 1.11+ feature
+cancel-pots-take: false
 
 # Will be double plant fixed?
 fix-double-plants: true
@@ -22,6 +24,9 @@ fix-pot-place: true
 
 # Will be break pistons extension fixed?
 fix-pistons: true
+
+#Will be double plant place fixed?
+fix-double-plant-place: true
 
 # Will be chorus fixed?
 # 1.9+ feature
@@ -42,8 +47,8 @@ fix-tall-seagrass: true
 #########################
 
 # Will be advanced checks used?
-# (Use them only in case of strange bugs)
+# (Use them only if default fixes doesn't works)
 advanced-check: false
 
 # Do not touch this number!
-config-version: 4
+config-version: 5

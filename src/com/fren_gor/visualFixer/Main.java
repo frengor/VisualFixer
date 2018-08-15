@@ -96,6 +96,14 @@ public class Main extends JavaPlugin {
 				Bukkit.getPluginManager().registerEvents(new PistonExtension(), this);
 
 		}
+		if (getConfig().getBoolean("fix-double-plant-place")) {
+
+			if (version >= 13)
+				Bukkit.getPluginManager().registerEvents(new com.fren_gor.visualFixer.v1_13.DoublePlantsPlace(), this);
+			else
+				Bukkit.getPluginManager().registerEvents(new DoublePlantsPlace(), this);
+
+		}
 
 		if (version > 8 && getConfig().getBoolean("fix-chorus")) {
 
@@ -199,6 +207,15 @@ public class Main extends JavaPlugin {
 			public String call() throws Exception {
 
 				return getConfig().getBoolean("fix-chorus") ? "Enabled" : "Disabled";
+
+			}
+		}));
+		
+		m.addCustomChart(new Metrics.SimplePie("fix_double_plant_place", new Callable<String>() {
+			@Override
+			public String call() throws Exception {
+
+				return getConfig().getBoolean("fix-double-plant-place") ? "Enabled" : "Disabled";
 
 			}
 		}));
@@ -369,6 +386,14 @@ public class Main extends JavaPlugin {
 						Bukkit.getPluginManager().registerEvents(new PistonExtension(), this);
 
 				}
+				if (getConfig().getBoolean("fix-double-plant-place")) {
+
+					if (version >= 13)
+						Bukkit.getPluginManager().registerEvents(new com.fren_gor.visualFixer.v1_13.DoublePlantsPlace(), this);
+					else
+						Bukkit.getPluginManager().registerEvents(new DoublePlantsPlace(), this);
+
+				}
 
 				if (version > 8 && getConfig().getBoolean("fix-chorus")) {
 
@@ -472,6 +497,15 @@ public class Main extends JavaPlugin {
 					public String call() throws Exception {
 
 						return getConfig().getBoolean("fix-chorus") ? "Enabled" : "Disabled";
+
+					}
+				}));
+				
+				m.addCustomChart(new Metrics.SimplePie("fix_double_plant_place", new Callable<String>() {
+					@Override
+					public String call() throws Exception {
+
+						return getConfig().getBoolean("fix-double-plant-place") ? "Enabled" : "Disabled";
 
 					}
 				}));
