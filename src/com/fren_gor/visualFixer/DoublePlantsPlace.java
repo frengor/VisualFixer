@@ -28,13 +28,11 @@ public class DoublePlantsPlace implements Listener {
 		if (e.getItemInHand() != null && e.getItemInHand().getType() == Material.valueOf("DOUBLE_PLANT")
 				&& e.isCancelled()) {
 
-			e.getPlayer().sendBlockChange(e.getBlock().getLocation(), e.getBlock().getType(),
-					e.getBlock().getData());
-			e.getPlayer().sendBlockChange(e.getBlock().getLocation().clone().add(0, 1, 0),
-					e.getBlock().getRelative(BlockFace.UP).getType(), e.getBlock().getRelative(BlockFace.UP).getData());
-			e.getPlayer().sendBlockChange(e.getBlock().getLocation().clone().add(0, 2, 0),
-					e.getBlock().getRelative(BlockFace.UP).getRelative(BlockFace.UP).getType(),
-					e.getBlock().getRelative(BlockFace.UP).getRelative(BlockFace.UP).getData());
+			e.getPlayer().sendBlockChange(e.getBlockAgainst().getLocation(), e.getBlockAgainst().getType(),
+					e.getBlockAgainst().getData());
+			e.getPlayer().sendBlockChange(e.getBlockAgainst().getLocation().clone().add(0, 1, 0),
+					e.getBlockAgainst().getRelative(BlockFace.UP).getType(),
+					e.getBlockAgainst().getRelative(BlockFace.UP).getData());
 
 		}
 
@@ -48,13 +46,13 @@ public class DoublePlantsPlace implements Listener {
 			if (e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getItem() != null
 					&& e.getItem().getType() == Material.valueOf("DOUBLE_PLANT") && e.isCancelled()) {
 
-				e.getPlayer().sendBlockChange(e.getClickedBlock().getLocation(), e.getClickedBlock().getType(),
-						e.getClickedBlock().getData());
-				e.getPlayer().sendBlockChange(e.getClickedBlock().getLocation().clone().add(0, 1, 0),
-						e.getClickedBlock().getRelative(BlockFace.UP).getType(), e.getClickedBlock().getRelative(BlockFace.UP).getData());
-				e.getPlayer().sendBlockChange(e.getClickedBlock().getLocation().clone().add(0, 2, 0),
-						e.getClickedBlock().getRelative(BlockFace.UP).getRelative(BlockFace.UP).getType(),
-						e.getClickedBlock().getRelative(BlockFace.UP).getRelative(BlockFace.UP).getData());
+					e.getPlayer().sendBlockChange(e.getClickedBlock().getRelative(e.getBlockFace()).getLocation(),
+							e.getClickedBlock().getRelative(e.getBlockFace()).getType(),
+							e.getClickedBlock().getRelative(e.getBlockFace()).getData());
+					e.getPlayer().sendBlockChange(
+							e.getClickedBlock().getRelative(e.getBlockFace()).getRelative(BlockFace.UP).getLocation(),
+							e.getClickedBlock().getRelative(e.getBlockFace()).getRelative(BlockFace.UP).getType(),
+							e.getClickedBlock().getRelative(e.getBlockFace()).getRelative(BlockFace.UP).getData());
 
 			}
 

@@ -29,11 +29,9 @@ public class DoublePlantsPlace implements Listener {
 
 		if (e.getItemInHand() != null && isDoublePlant(e.getItemInHand().getType()) && e.isCancelled()) {
 
-			e.getPlayer().sendBlockChange(e.getBlock().getLocation(), e.getBlock().getBlockData());
-			e.getPlayer().sendBlockChange(e.getBlock().getLocation().clone().add(0, 1, 0),
-					e.getBlock().getRelative(BlockFace.UP).getBlockData());
-			e.getPlayer().sendBlockChange(e.getBlock().getLocation().clone().add(0, 2, 0),
-					e.getBlock().getRelative(BlockFace.UP).getRelative(BlockFace.UP).getBlockData());
+			e.getPlayer().sendBlockChange(e.getBlockAgainst().getLocation(), e.getBlockAgainst().getBlockData());
+			e.getPlayer().sendBlockChange(e.getBlockAgainst().getLocation().clone().add(0, 1, 0),
+					e.getBlockAgainst().getRelative(BlockFace.UP).getBlockData());
 
 		}
 
@@ -47,11 +45,11 @@ public class DoublePlantsPlace implements Listener {
 			if (e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getItem() != null && isDoublePlant(e.getItem().getType())
 					&& e.isCancelled()) {
 
-				e.getPlayer().sendBlockChange(e.getClickedBlock().getLocation(), e.getClickedBlock().getBlockData());
-				e.getPlayer().sendBlockChange(e.getClickedBlock().getLocation().clone().add(0, 1, 0),
-						e.getClickedBlock().getRelative(BlockFace.UP).getBlockData());
-				e.getPlayer().sendBlockChange(e.getClickedBlock().getLocation().clone().add(0, 2, 0),
-						e.getClickedBlock().getRelative(BlockFace.UP).getRelative(BlockFace.UP).getBlockData());
+				e.getPlayer().sendBlockChange(e.getClickedBlock().getRelative(e.getBlockFace()).getLocation(),
+						e.getClickedBlock().getRelative(e.getBlockFace()).getBlockData());
+				e.getPlayer().sendBlockChange(
+						e.getClickedBlock().getRelative(e.getBlockFace()).getRelative(BlockFace.UP).getLocation(),
+						e.getClickedBlock().getRelative(e.getBlockFace()).getRelative(BlockFace.UP).getBlockData());
 
 			}
 
