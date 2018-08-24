@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.concurrent.Callable;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
@@ -28,6 +29,7 @@ import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ClickEvent.Action;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.chat.ComponentSerializer;
 
 public class Main extends JavaPlugin {
 
@@ -210,7 +212,7 @@ public class Main extends JavaPlugin {
 
 			}
 		}));
-		
+
 		m.addCustomChart(new Metrics.SimplePie("fix_double_plant_place", new Callable<String>() {
 			@Override
 			public String call() throws Exception {
@@ -320,7 +322,12 @@ public class Main extends JavaPlugin {
 						new ComponentBuilder(" to reload").color(net.md_5.bungee.api.ChatColor.GRAY).create());
 				t1.addExtra(t2);
 				t.addExtra(t1);
-				sender.spigot().sendMessage(t);
+				if(version != 7)
+					sender.spigot().sendMessage(t);
+				else if (sender instanceof Player)
+					((Player) sender).sendRawMessage(ComponentSerializer.toString(t));
+				else 
+					sender.sendMessage("§7Use " + ChatColor.UNDERLINE + "/visualfixer reload§r§7 to reload");
 				return true;
 
 			}
@@ -362,7 +369,7 @@ public class Main extends JavaPlugin {
 
 				}
 				if (getConfig().getBoolean("fix-fast-break")) {
-					
+
 					if (version >= 13)
 						Bukkit.getPluginManager().registerEvents(new com.fren_gor.visualFixer.v1_13.FastBreak(), this);
 					else
@@ -389,7 +396,8 @@ public class Main extends JavaPlugin {
 				if (getConfig().getBoolean("fix-double-plant-place")) {
 
 					if (version >= 13)
-						Bukkit.getPluginManager().registerEvents(new com.fren_gor.visualFixer.v1_13.DoublePlantsPlace(), this);
+						Bukkit.getPluginManager().registerEvents(new com.fren_gor.visualFixer.v1_13.DoublePlantsPlace(),
+								this);
 					else
 						Bukkit.getPluginManager().registerEvents(new DoublePlantsPlace(), this);
 
@@ -500,7 +508,7 @@ public class Main extends JavaPlugin {
 
 					}
 				}));
-				
+
 				m.addCustomChart(new Metrics.SimplePie("fix_double_plant_place", new Callable<String>() {
 					@Override
 					public String call() throws Exception {
