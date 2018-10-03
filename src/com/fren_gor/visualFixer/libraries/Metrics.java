@@ -20,13 +20,12 @@ import javax.net.ssl.HttpsURLConnection;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-
-import com.fren_gor.visualFixer.ReflectionUtil;
 
 /**
  * bStats collects some data for plugin authors.
@@ -224,12 +223,13 @@ public class Metrics {
 	 */
 	private JSONObject getServerData() {
 		// Minecraft specific data
-		int playerAmount;
+		int playerAmount = 0;
 
-		if (ReflectionUtil.versionIs1_7()) {
-			playerAmount = (int) ReflectionUtil.invoke(Bukkit.getOnlinePlayers(), "length");
-		} else
-			playerAmount = (int) ReflectionUtil.invoke(Bukkit.getOnlinePlayers(), "size");
+		for(Player p: Bukkit.getOnlinePlayers()){
+			
+			playerAmount++;
+			
+		}
 
 		int onlineMode = Bukkit.getOnlineMode() ? 1 : 0;
 		String bukkitVersion = org.bukkit.Bukkit.getVersion();

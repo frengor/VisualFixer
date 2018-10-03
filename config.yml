@@ -8,7 +8,7 @@
 #                                                                                    #
 ######################################################################################
 
-# Will be flower pots fixed?
+# Will be flower pots breaking fixed?
 fix-pots: true
 # 1.11+ feature
 cancel-pots-take: false
@@ -51,4 +51,4 @@ fix-tall-seagrass: true
 advanced-check: false
 
 # Do not touch this number!
-config-version: 5
+config-version: 6

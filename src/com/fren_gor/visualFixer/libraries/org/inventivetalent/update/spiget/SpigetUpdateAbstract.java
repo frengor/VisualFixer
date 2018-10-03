@@ -34,10 +34,10 @@ import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.fren_gor.visualFixer.libraries.com.google.gson.Gson;
+import com.fren_gor.visualFixer.libraries.com.google.gson.JsonObject;
+import com.fren_gor.visualFixer.libraries.com.google.gson.JsonParser;
 import com.fren_gor.visualFixer.libraries.org.inventivetalent.update.spiget.comparator.VersionComparator;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
 public abstract class SpigetUpdateAbstract {
 

@@ -40,7 +40,7 @@ public class Main extends JavaPlugin {
 	public void onEnable() {
 		instance = this;
 
-		version = Integer.parseInt(ReflectionUtil.getVersion().split("_")[1]);
+		version = Integer.parseInt(ReflectionUtil.getCompleteVersion().split("_")[1]);
 
 		getCommand("visualfixer").setTabCompleter(this);
 
