@@ -13,8 +13,8 @@ import lombok.Getter;
 import lombok.experimental.UtilityClass;
 
 /**
- * Reflection class by fren_gor 
- * Give me credits if you use it in one of your plugins
+ * Reflection class by fren_gor Give me credits if you use it in one of your
+ * plugin
  * 
  * @author fren_gor
  *
