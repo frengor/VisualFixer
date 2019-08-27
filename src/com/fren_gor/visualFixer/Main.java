@@ -106,6 +106,24 @@ public class Main extends JavaPlugin {
 				Bukkit.getPluginManager().registerEvents(new DoublePlantsPlace(), this);
 
 		}
+		
+		if (getConfig().getBoolean("fix-doors")) {
+
+			if (version >= 13)
+				Bukkit.getPluginManager().registerEvents(new com.fren_gor.visualFixer.v1_13.Door(), this);
+			else
+				Bukkit.getPluginManager().registerEvents(new Door(), this);
+
+		}
+		
+		if (getConfig().getBoolean("fix-beds")) {
+
+			if (version >= 13)
+				Bukkit.getPluginManager().registerEvents(new com.fren_gor.visualFixer.v1_13.Bed(), this);
+			else
+				Bukkit.getPluginManager().registerEvents(new Bed(), this);
+
+		}
 
 		if (version > 8 && getConfig().getBoolean("fix-chorus")) {
 
@@ -221,6 +239,24 @@ public class Main extends JavaPlugin {
 
 			}
 		}));
+		
+		m.addCustomChart(new Metrics.SimplePie("fix_doors_place", new Callable<String>() {
+			@Override
+			public String call() throws Exception {
+
+				return getConfig().getBoolean("fix-doors") ? "Enabled" : "Disabled";
+
+			}
+		}));
+		
+		m.addCustomChart(new Metrics.SimplePie("fix_beds_place", new Callable<String>() {
+			@Override
+			public String call() throws Exception {
+
+				return getConfig().getBoolean("fix-beds") ? "Enabled" : "Disabled";
+
+			}
+		}));
 
 		SpigetUpdate updater = new SpigetUpdate(this, 58442);
 
@@ -236,13 +272,13 @@ public class Main extends JavaPlugin {
 				// downloadUrl - URL to the download
 				// hasDirectDownload - whether the update is available for a
 				//// direct download on spiget.org
-				Bukkit.getConsoleSender().sendMessage("Â§e" + getName() + " is updating!");
+				Bukkit.getConsoleSender().sendMessage("§e" + getName() + " is updating!");
 				if (hasDirectDownload) {
 					if (updater.downloadUpdate()) {
 						// Update downloaded, will be loaded when the server
 						// restarts
 						Bukkit.getConsoleSender()
-								.sendMessage("Â§bUpdate downloaded, will be loaded when the server restarts");
+								.sendMessage("§bUpdate downloaded, will be loaded when the server restarts");
 					} else {
 						// Update failed
 						getLogger().warning("Update download failed, reason is " + updater.getFailReason());
@@ -253,7 +289,7 @@ public class Main extends JavaPlugin {
 			@Override
 			public void upToDate() {
 				//// Plugin is up-to-date
-				Bukkit.getConsoleSender().sendMessage("Â§b" + getName() + " is up to date!");
+				Bukkit.getConsoleSender().sendMessage("§b" + getName() + " is up to date!");
 			}
 		});
 
@@ -275,7 +311,7 @@ public class Main extends JavaPlugin {
 
 		if (label.equalsIgnoreCase("fixvisual") || label.equalsIgnoreCase("visualfixer:fixvisual")) {
 			if (!(sender instanceof Player)) {
-				sender.sendMessage("Â§cYou must be a player to do /fixvisual");
+				sender.sendMessage("§cYou must be a player to do /fixvisual");
 				return false;
 			}
 
@@ -295,7 +331,7 @@ public class Main extends JavaPlugin {
 			b.getWorld().refreshChunk(c.getX() + 1, c.getZ());
 			b.getWorld().refreshChunk(c.getX(), c.getZ() - 1);
 
-			sender.sendMessage("Â§aVisual reloaded");
+			sender.sendMessage("§aVisual reloaded");
 
 			return true;
 
@@ -305,14 +341,14 @@ public class Main extends JavaPlugin {
 
 			if (!sender.hasPermission("visualfix.visualfixer")) {
 
-				sender.sendMessage("Â§bInstalled Â§9VisualFixer Â§bversion " + getDescription().getVersion());
+				sender.sendMessage("§bInstalled §9VisualFixer §bversion " + getDescription().getVersion());
 
 				return true;
 			}
 
 			if (args.length == 0) {
 
-				sender.sendMessage("Â§bInstalled Â§9VisualFixer Â§bversion " + getDescription().getVersion());
+				sender.sendMessage("§bInstalled §9VisualFixer §bversion " + getDescription().getVersion());
 				TextComponent t = new TextComponent(
 						new ComponentBuilder("Use ").color(net.md_5.bungee.api.ChatColor.GRAY).create());
 				TextComponent t1 = new TextComponent(new ComponentBuilder("/visualfixer reload")
@@ -327,7 +363,7 @@ public class Main extends JavaPlugin {
 				else if (sender instanceof Player)
 					((Player) sender).sendRawMessage(ComponentSerializer.toString(t));
 				else 
-					sender.sendMessage("Â§7Use " + ChatColor.UNDERLINE + "/visualfixer reloadÂ§rÂ§7 to reload");
+					sender.sendMessage("§7Use " + ChatColor.UNDERLINE + "/visualfixer reload§r§7 to reload");
 				return true;
 
 			}
@@ -400,6 +436,24 @@ public class Main extends JavaPlugin {
 								this);
 					else
 						Bukkit.getPluginManager().registerEvents(new DoublePlantsPlace(), this);
+
+				}
+				
+				if (getConfig().getBoolean("fix-doors")) {
+
+					if (version >= 13)
+						Bukkit.getPluginManager().registerEvents(new com.fren_gor.visualFixer.v1_13.Door(), this);
+					else
+						Bukkit.getPluginManager().registerEvents(new Door(), this);
+
+				}
+				
+				if (getConfig().getBoolean("fix-beds")) {
+
+					if (version >= 13)
+						Bukkit.getPluginManager().registerEvents(new com.fren_gor.visualFixer.v1_13.Bed(), this);
+					else
+						Bukkit.getPluginManager().registerEvents(new Bed(), this);
 
 				}
 
@@ -517,6 +571,24 @@ public class Main extends JavaPlugin {
 
 					}
 				}));
+				
+				m.addCustomChart(new Metrics.SimplePie("fix_doors_place", new Callable<String>() {
+					@Override
+					public String call() throws Exception {
+
+						return getConfig().getBoolean("fix-doors") ? "Enabled" : "Disabled";
+
+					}
+				}));
+				
+				m.addCustomChart(new Metrics.SimplePie("fix_beds_place", new Callable<String>() {
+					@Override
+					public String call() throws Exception {
+
+						return getConfig().getBoolean("fix-beds") ? "Enabled" : "Disabled";
+
+					}
+				}));
 
 				SpigetUpdate updater = new SpigetUpdate(this, 58442);
 
@@ -534,14 +606,14 @@ public class Main extends JavaPlugin {
 						// hasDirectDownload - whether the update is available
 						//// for a
 						//// direct download on spiget.org
-						Bukkit.getConsoleSender().sendMessage("Â§e" + getName() + " is updating!");
+						Bukkit.getConsoleSender().sendMessage("§e" + getName() + " is updating!");
 						if (hasDirectDownload) {
 							if (updater.downloadUpdate()) {
 								// Update downloaded, will be loaded when the
 								// server
 								// restarts
 								Bukkit.getConsoleSender()
-										.sendMessage("Â§bUpdate downloaded, will be loaded when the server restarts");
+										.sendMessage("§bUpdate downloaded, will be loaded when the server restarts");
 							} else {
 								// Update failed
 								getLogger().warning("Update download failed, reason is " + updater.getFailReason());
@@ -552,11 +624,11 @@ public class Main extends JavaPlugin {
 					@Override
 					public void upToDate() {
 						//// Plugin is up-to-date
-						Bukkit.getConsoleSender().sendMessage("Â§b" + getName() + " is up to date!");
+						Bukkit.getConsoleSender().sendMessage("§b" + getName() + " is up to date!");
 					}
 				});
 
-				sender.sendMessage("Â§aReload complete.");
+				sender.sendMessage("§aReload complete.");
 
 				return true;
 			}
