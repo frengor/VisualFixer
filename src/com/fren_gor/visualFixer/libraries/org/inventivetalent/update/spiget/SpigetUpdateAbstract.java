@@ -41,8 +41,8 @@ import com.fren_gor.visualFixer.libraries.org.inventivetalent.update.spiget.comp
 
 public abstract class SpigetUpdateAbstract {
 
-	public static final String RESOURCE_INFO = "http://api.spiget.org/v2/resources/%s?ut=%s";
-	public static final String RESOURCE_VERSION = "http://api.spiget.org/v2/resources/%s/versions/latest?ut=%s";
+	public static final String RESOURCE_INFO = "https://api.spiget.org/v2/resources/%s?ut=%s";
+	public static final String RESOURCE_VERSION = "https://api.spiget.org/v2/resources/%s/versions/latest?ut=%s";
 
 	protected final int resourceId;
 	protected final String currentVersion;
@@ -103,7 +103,8 @@ public abstract class SpigetUpdateAbstract {
 
 					if (isVersionNewer(currentVersion, latestResourceInfo.latestVersion.name)) {
 						callback.updateAvailable(latestResourceInfo.latestVersion.name,
-								"https://spigotmc.org/" + latestResourceInfo.file.url, !latestResourceInfo.external);
+								"https://spigotmc.org/" + latestResourceInfo.file.url,
+								!latestResourceInfo.external && !latestResourceInfo.premium);
 					} else {
 						callback.upToDate();
 					}
