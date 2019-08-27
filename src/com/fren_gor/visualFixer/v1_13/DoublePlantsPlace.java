@@ -41,7 +41,7 @@ public class DoublePlantsPlace implements Listener {
 
 		@EventHandler(priority = EventPriority.MONITOR)
 		public void onDoublePlant(PlayerInteractEvent e) {
-
+			
 			if (e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getItem() != null && isDoublePlant(e.getItem().getType())
 					&& e.isCancelled()) {
 
