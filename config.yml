@@ -28,6 +28,12 @@ fix-pistons: true
 #Will be double plant place fixed?
 fix-double-plant-place: true
 
+# Will be place doors fixed?
+fix-doors: true
+
+# Will be place beds fixed?
+fix-beds: true
+
 # Will be chorus fixed?
 # 1.9+ feature
 fix-chorus: true
@@ -51,4 +57,4 @@ fix-tall-seagrass: true
 advanced-check: false
 
 # Do not touch this number!
-config-version: 6
+config-version: 7
