@@ -1,7 +1,9 @@
 main: com.fren_gor.visualFixer.Main
-version: 2.2.5
-name: VisualFixer
+version: ${project.version}
+name: ${project.name}
 author: fren_gor
+website: ${project.url}
+description: ${project.description}
 
 api-version: 1.13
 
