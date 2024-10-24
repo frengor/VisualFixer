@@ -3,6 +3,7 @@ package com.fren_gor.visualFixer.v1_13;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.Directional;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -23,7 +24,6 @@ public class PistonExtension implements Listener {
 		}
 	}
 
-	@SuppressWarnings("deprecation")
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPistonBreak(BlockBreakEvent e) {
 		
@@ -31,56 +31,15 @@ public class PistonExtension implements Listener {
 			return;
 		}
 
-		BlockFace b = BlockFace.UP;
+		BlockFace b = ((Directional) e.getBlock().getBlockData()).getFacing().getOppositeFace();
 
-		switch (e.getBlock().getData()) {
-		case 0:
-			break;
-		case 8:
-			break;
-		case 1:
-			b = BlockFace.DOWN;
-			break;
-		case 2:
-			b = BlockFace.SOUTH;
-			break;
-		case 3:
-			b = BlockFace.NORTH;
-			break;
-		case 4:
-			b = BlockFace.EAST;
-			break;
-		case 5:
-			b = BlockFace.WEST;
-			break;
-		case 9:
-			b = BlockFace.DOWN;
-			break;
-		case 10:
-			b = BlockFace.SOUTH;
-			break;
-		case 11:
-			b = BlockFace.NORTH;
-			break;
-		case 12:
-			b = BlockFace.EAST;
-			break;
-		case 13:
-			b = BlockFace.WEST;
-			break;
-
-		default:
-			break;
-		}
-
-		e.getPlayer().sendBlockChange(e.getBlock().getRelative(b).getLocation(), 
+		e.getPlayer().sendBlockChange(e.getBlock().getRelative(b).getLocation(),
 				e.getBlock().getRelative(b).getBlockData());
 
 	}
 
 	private class Advanced implements Listener {
 
-		@SuppressWarnings("deprecation")
 		@EventHandler(priority = EventPriority.MONITOR)
 		public void onPistonBreak(PlayerInteractEvent e) {
 
@@ -89,47 +48,7 @@ public class PistonExtension implements Listener {
 				return;
 			}
 
-			BlockFace b = BlockFace.UP;
-
-			switch (e.getClickedBlock().getData()) {
-			case 0:
-				break;
-			case 8:
-				break;
-			case 1:
-				b = BlockFace.DOWN;
-				break;
-			case 2:
-				b = BlockFace.SOUTH;
-				break;
-			case 3:
-				b = BlockFace.NORTH;
-				break;
-			case 4:
-				b = BlockFace.EAST;
-				break;
-			case 5:
-				b = BlockFace.WEST;
-				break;
-			case 9:
-				b = BlockFace.DOWN;
-				break;
-			case 10:
-				b = BlockFace.SOUTH;
-				break;
-			case 11:
-				b = BlockFace.NORTH;
-				break;
-			case 12:
-				b = BlockFace.EAST;
-				break;
-			case 13:
-				b = BlockFace.WEST;
-				break;
-
-			default:
-				break;
-			}
+			BlockFace b = ((Directional) e.getClickedBlock().getBlockData()).getFacing().getOppositeFace();
 
 			e.getPlayer().sendBlockChange(e.getClickedBlock().getRelative(b).getLocation(), 
 					e.getClickedBlock().getRelative(b).getBlockData());

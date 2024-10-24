@@ -39,7 +39,6 @@ public class Door implements Listener {
 
 	private class Advanced implements Listener {
 
-		@SuppressWarnings("deprecation")
 		@EventHandler(priority = EventPriority.MONITOR)
 		public void onDoorBreak(PlayerInteractEvent e) {
 

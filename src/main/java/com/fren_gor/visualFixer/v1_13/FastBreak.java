@@ -27,17 +27,16 @@ public class FastBreak implements Listener {
 		}
 	}
 
-	@SuppressWarnings("deprecation")
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onBreakFixer(BlockBreakEvent e) {
 
-		ItemStack i = e.getPlayer().getItemInHand();
+		ItemStack i = e.getPlayer().getInventory().getItemInMainHand();
 
 		if (e.isCancelled() || i == null || !isTool(i.getType())) {
 			return;
 		}
 
-		if (e.getPlayer().getItemInHand().getItemMeta().hasEnchant(Enchantment.DIG_SPEED)
+		if (i.getItemMeta().hasEnchant(Enchantment.DIG_SPEED)
 				|| e.getPlayer().hasPotionEffect(PotionEffectType.FAST_DIGGING)) {
 
 			Location l = e.getBlock().getLocation().clone().add(-1, -1, -1);
@@ -48,7 +47,7 @@ public class FastBreak implements Listener {
 						
 						if(x==1&&y==1&&z==1){
 							
-							e.getPlayer().sendBlockChange(e.getBlock().getLocation(), Material.AIR, (byte) 0);
+							e.getPlayer().sendBlockChange(e.getBlock().getLocation(), Material.AIR.createBlockData());
 							
 							continue;
 						}
@@ -89,16 +88,15 @@ public class FastBreak implements Listener {
 
 	private class Advanced implements Listener {
 
-		@SuppressWarnings("deprecation")
 		@EventHandler(priority = EventPriority.MONITOR)
 		public void onBreakFixer(PlayerInteractEvent e) {
 
-			ItemStack i = e.getPlayer().getItemInHand();
+			ItemStack i = e.getPlayer().getInventory().getItemInMainHand();
 
 			if (!e.isCancelled() || e.getAction() != Action.LEFT_CLICK_BLOCK || i == null || !isTool(i.getType()))
 				return;
 
-			if (e.getPlayer().getItemInHand().getItemMeta().hasEnchant(Enchantment.DIG_SPEED)
+			if (i.getItemMeta().hasEnchant(Enchantment.DIG_SPEED)
 					|| e.getPlayer().hasPotionEffect(PotionEffectType.FAST_DIGGING)) {
 
 				Location l = e.getClickedBlock().getLocation().clone().add(-1, -1, -1);
@@ -109,7 +107,7 @@ public class FastBreak implements Listener {
 							
 							if(x==1&&y==1&&z==1){
 								
-								e.getPlayer().sendBlockChange(e.getClickedBlock().getLocation(), Material.AIR, (byte) 0);
+								e.getPlayer().sendBlockChange(e.getClickedBlock().getLocation(), Material.AIR.createBlockData());
 								
 								continue;
 							}

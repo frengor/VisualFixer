@@ -32,15 +32,19 @@ public class Bed implements Listener {
 
 		switch (e.getBlock().getData()) {
 		case 0:
+		case 10:
 			b = BlockFace.SOUTH;
 			break;
 		case 1:
+		case 11:
 			b = BlockFace.WEST;
 			break;
 		case 2:
+		case 12:
 			b = BlockFace.NORTH;
 			break;
 		case 3:
+		case 9:
 			break;
 		default:
 			return;
@@ -65,15 +69,19 @@ public class Bed implements Listener {
 
 			switch (e.getClickedBlock().getData()) {
 			case 0:
+			case 10:
 				b = BlockFace.SOUTH;
 				break;
 			case 1:
+			case 11:
 				b = BlockFace.WEST;
 				break;
 			case 2:
+			case 12:
 				b = BlockFace.NORTH;
 				break;
 			case 3:
+			case 9:
 				break;
 			default:
 				return;
