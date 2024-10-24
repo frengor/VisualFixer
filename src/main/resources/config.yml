@@ -8,33 +8,33 @@
 #                                                                                    #
 ######################################################################################
 
-# Will be flower pots breaking fixed?
+# Will flower pots breaking be fixed?
 fix-pots: true
 # 1.11+ feature
 cancel-pots-take: false
 
-# Will be double plant fixed?
+# Will double plant be fixed?
 fix-double-plants: true
 
-# Will be fast breaking blocks fixed?
+# Will fast breaking blocks be fixed?
 fix-fast-break: true
 
-# Will be place flowers inside pot fixed?
+# Will place flowers inside pot be fixed?
 fix-pot-place: true
 
-# Will be break pistons extension fixed?
+# Will break pistons extension be fixed?
 fix-pistons: true
 
-#Will be double plant place fixed?
+# Will double plant place be fixed?
 fix-double-plant-place: true
 
-# Will be place doors fixed?
+# Will place doors be fixed?
 fix-doors: true
 
-# Will be place beds fixed?
+# Will place beds be fixed?
 fix-beds: true
 
-# Will be chorus fixed?
+# Will chorus be fixed?
 # 1.9+ feature
 fix-chorus: true
 
@@ -44,16 +44,16 @@ fix-chorus: true
 #                       #
 #########################
 
-# Will be kelps fixed?
+# Will kelps be fixed?
 fix-kelps: true
 
-# Will be tall seagrass fixed?
+# Will tall seagrass be fixed?
 fix-tall-seagrass: true
 
 #########################
 
-# Will be advanced checks used?
-# (Use them only if default fixes doesn't works)
+# Will advanced checks be used?
+# (Use them only if default fixes don't work)
 advanced-check: false
 
 # Do not touch this number!
