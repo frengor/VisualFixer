@@ -2,6 +2,7 @@ package com.fren_gor.visualFixer.v1_13;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.type.Bed.Part;
 import org.bukkit.event.EventHandler;
@@ -9,6 +10,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import com.fren_gor.visualFixer.Main;
@@ -24,8 +26,25 @@ public class Bed implements Listener {
 		}
 	}
 
-	@EventHandler
+	@EventHandler(priority = EventPriority.MONITOR)
 	public void onBedBreak(BlockBreakEvent e) {
+
+		if (!e.isCancelled() || !e.getBlock().getType().toString().contains("_BED"))
+			return;
+
+		BlockFace b = ((org.bukkit.block.data.type.Bed) e.getBlock().getBlockData()).getFacing();
+
+		if (((org.bukkit.block.data.type.Bed) e.getBlock().getBlockData()).getPart() == Part.HEAD) {
+			b = b.getOppositeFace();
+		}
+
+		e.getPlayer().sendBlockChange(e.getBlock().getRelative(b).getLocation(),
+				e.getBlock().getRelative(b).getBlockData());
+
+	}
+
+	@EventHandler(priority = EventPriority.MONITOR)
+	public void onBedPlace(BlockPlaceEvent e) {
 
 		if (!e.isCancelled() || !e.getBlock().getType().toString().contains("_BED"))
 			return;
@@ -46,8 +65,7 @@ public class Bed implements Listener {
 		@EventHandler(priority = EventPriority.MONITOR)
 		public void onBedBreak(PlayerInteractEvent e) {
 
-			if (!e.isCancelled() || e.getAction() != Action.LEFT_CLICK_BLOCK
-					|| !e.getClickedBlock().getType().toString().contains("_BED"))
+			if (!e.isCancelled() || e.getAction() != Action.LEFT_CLICK_BLOCK || !e.getClickedBlock().getType().toString().contains("_BED"))
 				return;
 
 			BlockFace b = ((org.bukkit.block.data.type.Bed) e.getClickedBlock().getBlockData()).getFacing();

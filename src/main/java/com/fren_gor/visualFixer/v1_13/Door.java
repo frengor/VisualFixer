@@ -8,6 +8,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import com.fren_gor.visualFixer.Main;
@@ -37,13 +38,30 @@ public class Door implements Listener {
 
 	}
 
+	@EventHandler(priority = EventPriority.MONITOR)
+	public void onDoorPlace(BlockPlaceEvent e) {
+
+		if (!e.isCancelled() || !e.getBlock().getType().toString().contains("_DOOR"))
+			return;
+
+		e.getPlayer().sendBlockChange(e.getBlock().getLocation().clone().add(0, -1, 0),
+				e.getBlock().getRelative(BlockFace.DOWN).getBlockData());
+		e.getPlayer().sendBlockChange(e.getBlock().getLocation(), e.getBlock().getBlockData());
+		e.getPlayer().sendBlockChange(e.getBlock().getLocation().clone().add(0, 1, 0),
+				e.getBlock().getRelative(BlockFace.UP).getBlockData());
+
+	}
+
 	private class Advanced implements Listener {
 
 		@EventHandler(priority = EventPriority.MONITOR)
 		public void onDoorBreak(PlayerInteractEvent e) {
 
-			if (!e.isCancelled() || e.getAction() != Action.LEFT_CLICK_BLOCK
-					|| !e.getClickedBlock().getType().toString().contains("_DOOR"))
+			if (!e.isCancelled() || !(
+					(e.getAction() == Action.LEFT_CLICK_BLOCK && e.getClickedBlock().getType().toString().contains("_DOOR"))
+					|| (e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getItem() != null && e.getMaterial().toString().contains("_DOOR"))
+				)
+			)
 				return;
 
 			e.getPlayer().sendBlockChange(e.getClickedBlock().getLocation().clone().add(0, -1, 0),
@@ -51,6 +69,8 @@ public class Door implements Listener {
 			e.getPlayer().sendBlockChange(e.getClickedBlock().getLocation(), e.getClickedBlock().getBlockData());
 			e.getPlayer().sendBlockChange(e.getClickedBlock().getLocation().clone().add(0, 1, 0),
 					e.getClickedBlock().getRelative(BlockFace.UP).getBlockData());
+			e.getPlayer().sendBlockChange(e.getClickedBlock().getLocation().clone().add(0, 2, 0),
+					e.getClickedBlock().getRelative(BlockFace.UP).getRelative(BlockFace.UP).getBlockData());
 
 		}
 	}
