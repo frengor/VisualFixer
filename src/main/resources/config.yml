@@ -1,0 +1,60 @@
+######################################################################################
+#     ____   ____.__                    .__  ___________.__                          #
+#     \   \ /   /|__| ________ _______  |  | \_   _____/|__|__  ___ ___________      #
+#      \   Y   / |  |/  ___/  |  \__  \ |  |  |    __)  |  \  \/  // __ \_  __ \     #
+#       \     /  |  |\___ \|  |  // __ \|  |__|    \    |  |>    <\  ___/|  | \/     #
+#        \___/   |__/____  >____/(____  /____/\____/    |__/__/\_ \\___  >__|        #
+#                        \/           \/                         \/    \/            #
+#                                                                                    #
+######################################################################################
+
+# Will flower pots breaking be fixed?
+fix-pots: true
+# 1.11+ feature
+cancel-pots-take: false
+
+# Will double plant be fixed?
+fix-double-plants: true
+
+# Will fast breaking blocks be fixed?
+fix-fast-break: true
+
+# Will place flowers inside pot be fixed?
+fix-pot-place: true
+
+# Will break pistons extension be fixed?
+fix-pistons: true
+
+# Will double plant place be fixed?
+fix-double-plant-place: true
+
+# Will place doors be fixed?
+fix-doors: true
+
+# Will place beds be fixed?
+fix-beds: true
+
+# Will chorus be fixed?
+# 1.9+ feature
+fix-chorus: true
+
+#########################
+#                       #
+#     1.13 Features     #
+#                       #
+#########################
+
+# Will kelps be fixed?
+fix-kelps: true
+
+# Will tall seagrass be fixed?
+fix-tall-seagrass: true
+
+#########################
+
+# Will advanced checks be used?
+# (Use them only if default fixes don't work)
+advanced-check: false
+
+# Do not touch this number!
+config-version: 7
