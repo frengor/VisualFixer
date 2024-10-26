@@ -19,19 +19,19 @@ fix-double-plants: true
 # Will fast breaking blocks be fixed?
 fix-fast-break: true
 
-# Will place flowers inside pot be fixed?
+# Will placing flowers inside pot be fixed?
 fix-pot-place: true
 
-# Will break pistons extension be fixed?
+# Will pistons extension breaking be fixed?
 fix-pistons: true
 
-# Will double plant place be fixed?
+# Will double plant placing be fixed?
 fix-double-plant-place: true
 
-# Will place doors be fixed?
+# Will doors be fixed?
 fix-doors: true
 
-# Will place beds be fixed?
+# Will beds be fixed?
 fix-beds: true
 
 # Will chorus be fixed?
