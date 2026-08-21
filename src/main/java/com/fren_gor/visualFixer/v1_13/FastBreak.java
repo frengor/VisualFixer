@@ -3,6 +3,7 @@ package com.fren_gor.visualFixer.v1_13;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.EventHandler;
@@ -36,8 +37,8 @@ public class FastBreak implements Listener {
 			return;
 		}
 
-		if (i.getItemMeta().hasEnchant(Enchantment.DIG_SPEED)
-				|| e.getPlayer().hasPotionEffect(PotionEffectType.FAST_DIGGING)) {
+		if (i.getItemMeta().hasEnchant(Enchantment.getByKey(NamespacedKey.minecraft("efficiency")))
+				|| e.getPlayer().hasPotionEffect(PotionEffectType.getByName("FAST_DIGGING"))) {
 
 			Location l = e.getBlock().getLocation().clone().add(-1, -1, -1);
 			
@@ -96,8 +97,8 @@ public class FastBreak implements Listener {
 			if (!e.isCancelled() || e.getAction() != Action.LEFT_CLICK_BLOCK || i == null || !isTool(i.getType()))
 				return;
 
-			if (i.getItemMeta().hasEnchant(Enchantment.DIG_SPEED)
-					|| e.getPlayer().hasPotionEffect(PotionEffectType.FAST_DIGGING)) {
+			if (i.getItemMeta().hasEnchant(Enchantment.getByKey(NamespacedKey.minecraft("efficiency")))
+					|| e.getPlayer().hasPotionEffect(PotionEffectType.getByName("FAST_DIGGING"))) {
 
 				Location l = e.getClickedBlock().getLocation().clone().add(-1, -1, -1);
 				
