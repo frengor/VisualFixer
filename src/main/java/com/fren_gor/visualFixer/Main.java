@@ -41,7 +41,12 @@ public class Main extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
-        version = Integer.parseInt(Bukkit.getBukkitVersion().split("-")[0].split("\\.")[1]);
+        String[] mcVersion = getMinecraftVersion().split("\\.");
+        if (mcVersion[0].equals("1")) { // Major version 1
+            version = Integer.parseInt(mcVersion[1]);
+        } else {
+            version = Integer.parseInt(mcVersion[0]);
+        }
 
         getCommand("visualfixer").setTabCompleter(this);
 
@@ -246,5 +251,14 @@ public class Main extends JavaPlugin {
                 });
             }
         });
+    }
+
+    private static String getMinecraftVersion() {
+        try {
+            // Paper-only method
+            return (String) Bukkit.class.getDeclaredMethod("getMinecraftVersion").invoke(null);
+        } catch (ReflectiveOperationException e) {
+            return Bukkit.getBukkitVersion().split("-")[0];
+        }
     }
 }
